@@ -114,11 +114,11 @@ public byte[] convertToXML(BpmnModel model) {
 ### 中文字符变成无意义汉字
 
 由于问题出在编码方式上，因此有几种修改方式
-####1. 修改jvm默认参数。
+#### 1. 修改jvm默认参数。
 
 在tomcat的vm运行参数上，加上-Dfile.encoding=UTF-8。不过副作用是导致整个项目都运行在utf-8下，对于写的不严谨的项目，可能导致其它地方默认使用gb2312编码的代码出错。
 
-####2. 修改Explorer部署部分的代码
+#### 2. 修改Explorer部署部分的代码
 将`org.activiti.editor.ui.EditorProcessDefinitionDetailPanel.deployModelerModel():348`
 修改为`.addString(processName, new String(bpmnBytes, "UTF-8"))`即可。
 
@@ -126,7 +126,7 @@ public byte[] convertToXML(BpmnModel model) {
 
 - 也可以在自己的项目下，手动创建`org.activiti.editor.ui.EditorProcessDefinitionDetailPanel`类，把Activiti的源码贴进去，再修改正确。这样我们重写的类就会由classloader优先加载，覆盖Activiti自己的实现，达到修改的目的。
 
-####3. 说到底Explorer只是Activiti提供的demo样例。可以参考Explorer的代码，但直接拿来用并不明智。
+#### 3. 说到底Explorer只是Activiti提供的demo样例。可以参考Explorer的代码，但直接拿来用并不明智。
 
 ### 显示字符为空白
 
